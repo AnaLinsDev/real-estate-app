@@ -1,0 +1,65 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.pkl
+*.pyc
+
+# Arquivos temporários
+*.log
+*.pot
+*.py[co]
+*.orig
+*.rej
+
+# Virtual Environment (venv)
+venv/
+ENV/
+env/
+.venv/
+.python-version
+
+# Configurações locais
+*.env
+.env.*
+*.ini~
+*~
+
+# SQLite database
+*.db
+*.sqlite3
+database.db
+
+# Alembic
+alembic/versions/*.pyc
+alembic/versions/*_cache*
+
+# VSCode
+.vscode/
+.history/
+
+# PyCharm
+.idea/
+*.iml
+
+# Cache do pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Arquivos de build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Arquivos do TypeScript/Node (caso use)
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# Outros
+.DS_Store
+Thumbs.db
