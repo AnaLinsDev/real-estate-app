@@ -11,15 +11,27 @@ class PropertyBase(BaseModel):
     type: str
     address: Optional[str] = None
     status: str = "available"
-    photos: Optional[str] = None   # armazenado como texto (JSON string)
+    photos: Optional[str] = None   # JSON armazenado como texto
     notes: Optional[str] = None
 
 
 # ---------------------------------------------------
-# Create – usado no cadastro de propriedades
+# Create – entrada ao criar uma propriedade
 # ---------------------------------------------------
 class PropertyCreate(PropertyBase):
-    pass  # nenhum campo adicional além dos do Base
+    pass
+
+
+# ---------------------------------------------------
+# Update – permite atualizar parcialmente
+# ---------------------------------------------------
+class PropertyUpdate(BaseModel):
+    name: Optional[str] = None
+    type: Optional[str] = None
+    address: Optional[str] = None
+    status: Optional[str] = None
+    photos: Optional[str] = None
+    notes: Optional[str] = None
 
 
 # ---------------------------------------------------
