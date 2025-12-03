@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// IMPORTANTE: photos and documents will be only a path to a local folder saving those images/pdf
+
+//
+// USUARIOS
+//
 model User {
   id             Int      @id @default(autoincrement())
   username       String
@@ -18,3 +23,88 @@ model User {
   createdAt      DateTime @default(now())
 }
 
+
+//
+// IMOVEIS
+//
+model Property {
+  id       Int      @id @default(autoincrement())
+  name     String
+  type     String
+  address  String?
+  status   String   @default("available")
+  photos   String?  // JSON armazenado como texto
+  notes    String?
+
+  // relations
+  occupations        Occupation[]
+  investments        PropertyInvestment[]
+  bills              PropertyBill[]
+}
+
+//
+// INQUILINOS
+//
+model Tenant {
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String?
+  email      String?
+  documents  String?  // JSON armazenado como texto
+  notes      String?
+
+  // relations
+  occupations  Occupation[]
+  bills        PropertyBill[]
+}
+
+//
+// OCUPACAO
+//
+model Occupation {
+  id          Int     @id @default(autoincrement())
+  property_id Int
+  tenant_id   Int
+  start_date  String  // ISO string
+  end_date    String?
+  notes       String?
+
+  // relations
+  property  Property @relation(fields: [property_id], references: [id])
+  tenant    Tenant   @relation(fields: [tenant_id], references: [id])
+}
+
+//
+// GASTOS MENSAIS (INVESTIMENTOS)
+//
+model PropertyInvestment {
+  id              Int      @id @default(autoincrement())
+  property_id     Int
+  description     String
+  reference_month String   // YYYY-MM
+  date            String   // YYYY-MM-DD
+  amount          Float
+  notes           String?
+
+  // relation
+  property Property @relation(fields: [property_id], references: [id])
+}
+
+//
+// PAGAMENTOS / CONTAS
+//
+model PropertyBill {
+  id              Int      @id @default(autoincrement())
+  property_id     Int
+  tenant_id       Int?
+  bill_type       String
+  reference_month String   // YYYY-MM
+  due_date        String?
+  paid_date       String?
+  amount          Float
+  notes           String?
+
+  // relations
+  property Property @relation(fields: [property_id], references: [id])
+  tenant   Tenant?  @relation(fields: [tenant_id], references: [id])
+}
