@@ -19,6 +19,16 @@ class TenantBase(BaseModel):
 class TenantCreate(TenantBase):
     pass  # nenhum campo extra além dos do Base
 
+# ---------------------------------------------------
+# Update – usado para atualizações parciais
+# ---------------------------------------------------
+class TenantUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    email: Optional[EmailStr] = None
+    documents: Optional[str] = None
+    notes: Optional[str] = None
+
 
 # ---------------------------------------------------
 # Read – resposta da API com o ID
@@ -28,3 +38,5 @@ class TenantRead(TenantBase):
 
     class Config:
         from_attributes = True
+
+
