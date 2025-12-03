@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 from prisma import Prisma
 from app.database.database import get_db
-from app.schemas.user import UserCreate, UserResponse
+from app.schemas.user import UserCreate, UserRead
 from app.utils.hashing import hash_password
 
 router = APIRouter()
 
-@router.post("/", response_model=UserResponse)
+@router.post("/", response_model=UserRead)
 async def create_user(data: UserCreate, db: Prisma = Depends(get_db)):
     exists = await db.user.find_unique(where={"email": data.email})
     if exists:
