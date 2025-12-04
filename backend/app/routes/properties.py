@@ -1,7 +1,9 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException
 from prisma import Prisma
 from app.database.database import get_db
 from app.schemas.property import PropertyCreate, PropertyRead, PropertyUpdate
+
 
 router = APIRouter()
 
@@ -17,22 +19,26 @@ async def create_property(data: PropertyCreate, db: Prisma = Depends(get_db)):
     return new_property
 
 
+
 # -------------------------------------------------------
-# READ ALL
+# GET ALL
 # -------------------------------------------------------
 @router.get("/", response_model=list[PropertyRead])
 async def list_properties(db: Prisma = Depends(get_db)):
-    properties = await db.property.find_many()
+    properties = await db.property.find_many(
+        include={"property_photos": True}
+    )
     return properties
 
 
 # -------------------------------------------------------
-# READ ONE
+# GET ONE
 # -------------------------------------------------------
 @router.get("/{property_id}", response_model=PropertyRead)
 async def get_property(property_id: int, db: Prisma = Depends(get_db)):
     property_db = await db.property.find_unique(
-        where={"id": property_id}
+        where={"id": property_id},
+        include={"property_photos": True}
     )
 
     if not property_db:

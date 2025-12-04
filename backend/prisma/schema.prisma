@@ -33,14 +33,30 @@ model Property {
   type     String
   address  String?
   status   String   @default("available")
-  photos   String?  // JSON armazenado como texto
+  photos   String?  // URL to the file with the ONE photo
   notes    String?
 
   // relations
   occupations        Occupation[]
   investments        PropertyInvestment[]
   bills              PropertyBill[]
+  property_photos    PropertyPhoto[]
 }
+
+
+//
+// FOTOS DOS IMOVEIS
+//
+model PropertyPhoto {
+  id          Int      @id @default(autoincrement())
+  property_id Int
+  url_photo   String
+
+  property    Property @relation(fields: [property_id], references: [id])
+
+  @@index([property_id])
+}
+
 
 //
 // INQUILINOS

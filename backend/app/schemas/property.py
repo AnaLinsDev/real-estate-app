@@ -1,7 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
-from typing import Optional
-
+from typing import List, Optional
+from app.schemas.property_photo import PropertyPhotoRead
 
 # ---------------------------------------------------
 # Base – campos usados em Create e Read
@@ -37,8 +37,15 @@ class PropertyUpdate(BaseModel):
 # ---------------------------------------------------
 # Read – resposta da API (inclui id)
 # ---------------------------------------------------
-class PropertyRead(PropertyBase):
+class PropertyRead(BaseModel):
     id: int
+    name: str
+    type: str
+    address: str | None
+    status: str
+    notes: str | None
+    property_photos: list[PropertyPhotoRead] = []
 
     class Config:
         from_attributes = True
+
