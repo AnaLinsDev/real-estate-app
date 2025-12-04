@@ -36,5 +36,5 @@ prisma generate
 Inicia a API em modo de recarga automática:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
