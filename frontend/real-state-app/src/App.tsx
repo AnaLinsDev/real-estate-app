@@ -1,45 +1,20 @@
-import './styles/App.css'
-import { useEffect, useState } from "react";
-import { propertiesApi } from "./api/propertiesApi.ts";
-import type { Property } from './types/types.ts';
+import "./styles/App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TenantsPage from "./pages/Tenants/Tenants.tsx";
+import PropertiesPage from "./pages/Properties/Properties.tsx";
+import HomePage from "./pages/Home/Home.tsx";
+import DefaultLayout from "./layouts/DefaultLayout.tsx";
 
-
-function App() {
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchProperties() {
-      try {
-        const data = await propertiesApi.getAll();
-        setProperties(data);
-      } catch (error) {
-        console.error("Erro ao carregar propriedades:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchProperties();
-  }, []);
-
-  if (loading) return <p>Loading properties...</p>;
-
+export default function App() {
   return (
-    <div>
-      <h1>Lista de Imóveis</h1>
-
-      {properties.length === 0 && <p>No properties found.</p>}
-
-      <ul>
-        {properties.map((p) => (
-          <li key={p.id}>
-            <strong>{p.name}</strong> — {p.type}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<DefaultLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/properties" element={<PropertiesPage />} />
+          <Route path="/tenants" element={<TenantsPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

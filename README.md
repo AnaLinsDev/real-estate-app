@@ -1,5 +1,7 @@
 ## Real State App
 
+## BACKEND (Dentro de /backend)
+
 🚀 1. Criar e ativar ambiente virtual
 
 Cria o ambiente isolado para o projeto:
@@ -37,4 +39,18 @@ Inicia a API em modo de recarga automática:
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+## FRONTEND (Dentro de /frontend/real-state-app)
+
+🚀 1. Importar dependencias
+
+```bash
+npm install
+```
+
+🗄️ 2. Iniciar aplicação (DEV)
+
+```bash
+npm run dev
 ```
